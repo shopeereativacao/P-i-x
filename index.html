@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
@@ -5,15 +6,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-/* ===== CORES (AJUSTADAS) ===== */
 :root{
-    --vermelho:#fb5533;        /* vermelho ainda mais próximo */
-    --vermelho-escuro:#d73211; /* hover */
+    --vermelho:#fb5533;
+    --vermelho-escuro:#d73211;
     --cinza:#777;
     --borda:#e5e5e5;
 }
 
-/* ===== RESET ===== */
 *{
     box-sizing:border-box;
     font-family: Arial, Helvetica, sans-serif;
@@ -21,11 +20,10 @@
 
 body{
     margin:0;
-    background:#ffffff; /* FUNDO TOTALMENTE BRANCO */
+    background:#ffffff;
     color:#333;
 }
 
-/* ===== TOPO ===== */
 .header{
     background:linear-gradient(90deg,var(--vermelho),#ff6a3a);
     padding:14px 16px;
@@ -33,25 +31,21 @@ body{
     align-items:center;
 }
 
-/* LOGO UM POUCO MAIOR */
 .header img{
-    height:34px; /* antes 28px */
+    height:34px;
 }
 
-/* ===== CONTAINER ===== */
 .container{
     max-width:420px;
     margin:18px auto;
     padding:16px;
 }
 
-/* ===== TÍTULOS ===== */
 .title{
     font-size:16px;
     margin-bottom:12px;
 }
 
-/* ===== VALOR ===== */
 .row{
     display:flex;
     justify-content:space-between;
@@ -63,14 +57,12 @@ body{
     color:var(--vermelho);
 }
 
-/* ===== TEMPO ===== */
 .timer{
     font-size:13px;
     color:var(--vermelho);
     margin:10px 0 16px;
 }
 
-/* ===== PIX ===== */
 .pix-box{
     text-align:center;
     border-top:1px solid var(--borda);
@@ -84,7 +76,6 @@ body{
     margin:12px 0;
 }
 
-/* ===== BOTÕES ===== */
 button{
     width:100%;
     padding:11px;
@@ -105,6 +96,7 @@ button.primary{
     background:var(--vermelho);
     color:#fff;
     border:none;
+    margin-top:12px;
 }
 
 button.primary:hover{
@@ -118,7 +110,6 @@ button:disabled{
     cursor:not-allowed;
 }
 
-/* ===== LISTA ===== */
 .instructions{
     font-size:13px;
     margin:16px 0;
@@ -129,7 +120,6 @@ button:disabled{
     margin-bottom:6px;
 }
 
-/* ===== EXPIRADO ===== */
 .expired{
     text-align:center;
     color:#d32f2f;
@@ -138,7 +128,6 @@ button:disabled{
     display:none;
 }
 
-/* ===== MOBILE ===== */
 @media(max-width:480px){
     .container{padding:12px}
 }
@@ -147,7 +136,6 @@ button:disabled{
 
 <body>
 
-<!-- TOPO / LOGO -->
 <div class="header">
     <img src="logo.jpeg" alt="Logo">
 </div>
@@ -170,7 +158,7 @@ button:disabled{
 
         <img src="qrcode.png" alt="QR Code Pix">
 
-        <pre id="codigo" style="display:none;">SEU_CODIGO_PIX_AQUI</pre>
+        <pre id="codigo" style="display:none;">00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/736805a60c954c998ceeb3c878d9f5825204000053039865802BR5916AJC GATEWAY LTDA6009JOINVILLE62070503***63048453</pre>
 
         <button id="copiar">Copiar código Pix</button>
     </div>
@@ -179,10 +167,10 @@ button:disabled{
         <li>Acesse o aplicativo do seu banco.</li>
         <li>Escolha pagar via Pix.</li>
         <li>Escaneie o QR Code ou cole o código.</li>
-        <li>O pagamento será confirmado em instantes.</li>
+        <li>Após pagar, volte ao chat e envie o comprovante.</li>
     </ul>
 
-    <button class="primary">OK</button>
+    <button id="okBtn" class="primary">OK</button>
 
     <div id="expirado" class="expired">
         Tempo expirado. Gere um novo pagamento.
@@ -191,12 +179,15 @@ button:disabled{
 </div>
 
 <script>
-/* ===== CONTADOR 10 MINUTOS ===== */
+/* ===== CONTADOR ===== */
 let tempo = 600;
 const elTempo = document.getElementById("tempo");
 const btnCopiar = document.getElementById("copiar");
 const expirado = document.getElementById("expirado");
 const codigo = document.getElementById("codigo");
+const okBtn = document.getElementById("okBtn");
+
+const origem = document.referrer;
 
 const intervalo = setInterval(()=>{
     const m = Math.floor(tempo/60);
@@ -219,6 +210,17 @@ const intervalo = setInterval(()=>{
 btnCopiar.onclick = () => {
     navigator.clipboard.writeText(codigo.textContent.trim());
     btnCopiar.textContent = "Código copiado";
+};
+
+/* ===== OK → FECHAR / VOLTAR PRO MESMO WHATSAPP ===== */
+okBtn.onclick = () => {
+    window.close();
+
+    setTimeout(()=>{
+        if(origem){
+            window.location.href = origem;
+        }
+    },400);
 };
 </script>
 
