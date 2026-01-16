@@ -24,7 +24,7 @@ body{
     color:#333;
 }
 
-/* ===== SPLASH ===== */
+/* SPLASH */
 #splash{
     position:fixed;
     inset:0;
@@ -39,7 +39,7 @@ body{
     width:120px;
 }
 
-/* ===== TOPO ===== */
+/* TOPO */
 .header{
     background:linear-gradient(90deg,var(--vermelho),#ff6a3a);
     padding:14px 16px;
@@ -51,13 +51,14 @@ body{
     height:34px;
 }
 
-/* ===== CONTAINER ===== */
+/* CONTAINER */
 .container{
     max-width:420px;
     margin:18px auto;
     padding:16px;
 }
 
+/* TEXTO */
 .title{
     font-size:16px;
     margin-bottom:12px;
@@ -80,6 +81,7 @@ body{
     margin:10px 0 16px;
 }
 
+/* PIX */
 .pix-box{
     text-align:center;
     border-top:1px solid var(--borda);
@@ -93,6 +95,7 @@ body{
     margin:12px 0;
 }
 
+/* BOTÕES */
 button{
     width:100%;
     padding:11px;
@@ -127,6 +130,7 @@ button:disabled{
     cursor:not-allowed;
 }
 
+/* LISTA */
 .instructions{
     font-size:13px;
     margin:16px 0;
@@ -137,12 +141,25 @@ button:disabled{
     margin-bottom:6px;
 }
 
+/* EXPIRADO */
 .expired{
     text-align:center;
     color:#d32f2f;
     font-weight:bold;
     margin-top:14px;
     display:none;
+}
+
+/* RODAPÉ */
+.footer{
+    margin-top:18px;
+    text-align:center;
+    font-size:11px;
+    color:#777;
+}
+
+.footer strong{
+    color:#555;
 }
 
 @media(max-width:480px){
@@ -153,7 +170,7 @@ button:disabled{
 
 <body>
 
-<!-- SPLASH COM LOGO -->
+<!-- SPLASH -->
 <div id="splash">
     <img src="./logo1.jpeg" alt="Logo">
 </div>
@@ -179,7 +196,7 @@ button:disabled{
     <div class="pix-box">
         <div><strong>Pix</strong></div>
 
-        <img src="./qrcode.png" alt="QR Code Pix">
+        <img src="./qrcode.jpeg" alt="QR Code Pix">
 
         <pre id="codigo" style="display:none;">00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/981225a462dc48dd840c40fef44453205204000053039865802BR5916IVI GATEWAY LTDA6009JOINVILLE62070503***6304D2E0</pre>
 
@@ -190,7 +207,7 @@ button:disabled{
         <li>Acesse o aplicativo do seu banco.</li>
         <li>Escolha pagar via Pix.</li>
         <li>Escaneie o QR Code ou cole o código.</li>
-        <li>Após pagar, volte ao chat e envie o comprovante.</li>
+        <li>Após pagar, retorne ao chat e envie o comprovante.</li>
     </ul>
 
     <button id="okBtn" class="primary">OK</button>
@@ -199,24 +216,28 @@ button:disabled{
         Tempo expirado. Gere um novo pagamento.
     </div>
 
+    <!-- RODAPÉ COM SEGURANÇA -->
+    <div class="footer">
+        <div><strong>CNPJ:</strong>CNPJ/MF nº 35.635.824/0001-12</div>
+        <div>Ambiente seguro • Pagamento protegido • Dados criptografados</div>
+    </div>
+
 </div>
 
 <script>
-/* ===== SPLASH 3 SEGUNDOS ===== */
+/* SPLASH 3s */
 window.onload = () => {
     setTimeout(()=>{
         document.getElementById("splash").style.display = "none";
     },3000);
 };
 
-/* ===== CONTADOR ===== */
+/* CONTADOR */
 let tempo = 600;
 const elTempo = document.getElementById("tempo");
 const btnCopiar = document.getElementById("copiar");
 const expirado = document.getElementById("expirado");
 const codigo = document.getElementById("codigo");
-const okBtn = document.getElementById("okBtn");
-const origem = document.referrer;
 
 const intervalo = setInterval(()=>{
     const m = Math.floor(tempo/60);
@@ -234,20 +255,21 @@ const intervalo = setInterval(()=>{
     tempo--;
 },1000);
 
-/* ===== COPIAR PIX ===== */
+/* COPIAR */
 btnCopiar.onclick = () => {
     navigator.clipboard.writeText(codigo.textContent.trim());
     btnCopiar.textContent = "Código copiado";
 };
 
-/* ===== OK → VOLTAR PRO WHATSAPP ===== */
-okBtn.onclick = () => {
-    window.close();
-    setTimeout(()=>{
-        if(origem){
-            window.location.href = origem;
-        }
-    },400);
+/* OK → VOLTA PARA O WHATSAPP */
+document.getElementById("okBtn").onclick = () => {
+    const origem = document.referrer;
+
+    if (origem && (origem.includes("wa.me") || origem.includes("whatsapp"))) {
+        window.location.href = origem;
+    } else {
+        window.location.href = "https://wa.me/";
+    }
 };
 </script>
 
