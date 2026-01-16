@@ -24,6 +24,22 @@ body{
     color:#333;
 }
 
+/* ===== SPLASH ===== */
+#splash{
+    position:fixed;
+    inset:0;
+    background:#ffffff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+#splash img{
+    width:120px;
+}
+
+/* ===== TOPO ===== */
 .header{
     background:linear-gradient(90deg,var(--vermelho),#ff6a3a);
     padding:14px 16px;
@@ -35,6 +51,7 @@ body{
     height:34px;
 }
 
+/* ===== CONTAINER ===== */
 .container{
     max-width:420px;
     margin:18px auto;
@@ -136,8 +153,14 @@ button:disabled{
 
 <body>
 
+<!-- SPLASH COM LOGO -->
+<div id="splash">
+    <img src="./logo.jpeg" alt="Logo">
+</div>
+
+<!-- TOPO -->
 <div class="header">
-    <img src="logo.jpeg" alt="Logo">
+    <img src="./logo.jpeg" alt="Logo">
 </div>
 
 <div class="container">
@@ -146,7 +169,7 @@ button:disabled{
 
     <div class="row">
         <span>Pagamento Total</span>
-        <strong>R$ 50,00</strong>
+        <strong>R$ 287,00</strong>
     </div>
 
     <div class="timer">
@@ -156,9 +179,9 @@ button:disabled{
     <div class="pix-box">
         <div><strong>Pix</strong></div>
 
-        <img src="qrcode.jpeg" alt="QR Code Pix">
+        <img src="./qrcode.png" alt="QR Code Pix">
 
-        <pre id="codigo" style="display:none;">00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/736805a60c954c998ceeb3c878d9f5825204000053039865802BR5916AJC GATEWAY LTDA6009JOINVILLE62070503***63048453</pre>
+        <pre id="codigo" style="display:none;">00020101021226790014br.gov.bcb.pix2557qrcode.mwbank.com.br/cob/981225a462dc48dd840c40fef44453205204000053039865802BR5916IVI GATEWAY LTDA6009JOINVILLE62070503***6304D2E0</pre>
 
         <button id="copiar">Copiar código Pix</button>
     </div>
@@ -179,6 +202,13 @@ button:disabled{
 </div>
 
 <script>
+/* ===== SPLASH 3 SEGUNDOS ===== */
+window.onload = () => {
+    setTimeout(()=>{
+        document.getElementById("splash").style.display = "none";
+    },3000);
+};
+
 /* ===== CONTADOR ===== */
 let tempo = 600;
 const elTempo = document.getElementById("tempo");
@@ -186,7 +216,6 @@ const btnCopiar = document.getElementById("copiar");
 const expirado = document.getElementById("expirado");
 const codigo = document.getElementById("codigo");
 const okBtn = document.getElementById("okBtn");
-
 const origem = document.referrer;
 
 const intervalo = setInterval(()=>{
@@ -202,7 +231,6 @@ const intervalo = setInterval(()=>{
         btnCopiar.disabled = true;
         expirado.style.display = "block";
     }
-
     tempo--;
 },1000);
 
@@ -212,10 +240,9 @@ btnCopiar.onclick = () => {
     btnCopiar.textContent = "Código copiado";
 };
 
-/* ===== OK → FECHAR / VOLTAR PRO MESMO WHATSAPP ===== */
+/* ===== OK → VOLTAR PRO WHATSAPP ===== */
 okBtn.onclick = () => {
     window.close();
-
     setTimeout(()=>{
         if(origem){
             window.location.href = origem;
